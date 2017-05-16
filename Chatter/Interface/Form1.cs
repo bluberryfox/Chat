@@ -50,19 +50,16 @@ namespace Interface
                 {
                     updateOnline(data);
                 }
-
-
             }
         }
 
         private void updateOnline(string data)
         {
-            string temp = data.Substring(6);
+            string temp = data.Substring(11);
             string[] users = temp.Split('&');
             for (int i = 0; i < users.Length; i++)
             {
-
-                printOnline(users[i], onlineVisitors);
+                print(users[i], onlineVisitors);
             }
 
 
@@ -130,19 +127,8 @@ namespace Interface
             else
                 textBox.AppendText(Environment.NewLine + msg);
         }
-        private void printOnline(string msg, TextBox textBox)
-        {
-            if (this.InvokeRequired)
-            {
-                this.Invoke(Printer, msg, textBox);
-                return;
-            }
-            if (textBox.Text.Length == 0)
-                textBox.AppendText(msg);
-            else {
-                textBox.AppendText(Environment.NewLine + msg);
-            }
-        }
+       
+       
         private void enterChat_Click(object sender, EventArgs e)
         {
             string name = userName.Text;

@@ -16,7 +16,7 @@ namespace Chatter
             {
                 Client newClient = new Client(handle);
                 Clients.Add(newClient);
-                
+                newClient.UpdateUser();
         
                 Console.WriteLine("New client connected: "+ handle.RemoteEndPoint);
             }
@@ -24,6 +24,7 @@ namespace Chatter
             {
                 Console.WriteLine("Error with addNewClient: "+ exp.Message);
             }
+
            
         }
         public static void DisconnectClient(Client client)
@@ -33,6 +34,7 @@ namespace Chatter
                 client.Disconnect();
                 Clients.Remove(client);
                 Console.WriteLine("User " + client.UserName + " has been disconnected");
+                client.UpdateUser();
 
             }
             catch (Exception exp)
