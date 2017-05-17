@@ -71,6 +71,7 @@ namespace Interface
             {
                 byte[] buffer = Encoding.UTF8.GetBytes(data);
                 int bytesSent = serverSocket.Send(buffer);
+
             }
             catch(SocketException e)
             {
