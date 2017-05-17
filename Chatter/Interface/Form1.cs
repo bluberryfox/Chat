@@ -30,25 +30,12 @@ namespace Interface
             connection = new Connection("localhost", 9933);
 
         }
-        private void receive(object sender, DataEventArgs e)
-        {
-            string data = e.Data;
-            if (data.Contains("#updatechat"))
-            {
-                UpdateChat(data);
+        
 
-            }
-            if (data.Contains("#updateuser"))
-            {
-                UpdateOnline(data);
-            }
-        }
-
-        public void UpdateOnline(string data)
+        private void updateOnline(object sender, DataEventArgs e)
         {
+            string[] users = e.Data; 
             clearChat(onlineVisitors);
-            string temp = data.Substring(12);
-            string[] users = temp.Split('&');
             for (int i = 0; i < users.Length - 1; i++)
             {
                 Print(users[i], onlineVisitors);
@@ -64,16 +51,14 @@ namespace Interface
             }
             textBox.Clear();
         }
-        public void UpdateChat(string data)
+        private void updateChat(object sender, DataEventArgs e)
         {
+            string [] messages = e.Data;
             clearChat(chatBox);
-            string[] messages = data.Split('&')[1].Split('|');
             int countMessages = messages.Length;
-            if (countMessages <= 0) return;
             for (int i = 0; i < countMessages; i++)
             {
-                if (string.IsNullOrEmpty(messages[i])) continue;
-                Print(String.Format("[{0}]:{1}.", messages[i].Split('~')[0], messages[i].Split('~')[1]), chatBox);
+                Print(messages[i], chatBox);
             }
         }
 
@@ -93,7 +78,8 @@ namespace Interface
         private void enterChat_Click(object sender, EventArgs e)
         {
 
-            connection.ReceivingData += receive;
+            connection.ReceivingUsers += updateOnline;
+            connection.ReceivingMessages += updateChat;
             string temp = userName.Text;
             if (string.IsNullOrEmpty(temp)) return;
             name = temp;

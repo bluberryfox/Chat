@@ -15,8 +15,11 @@ namespace Interface
         private Thread clientThread;
         private string serverHost;
         private int serverPort;
-        public delegate void ReceiveStateHandler(object sender, DataEventArgs e);
-        public event ReceiveStateHandler ReceivingData;
+        public delegate void ReceiveUsersStateHandler(object sender, DataEventArgs e);
+        public event ReceiveUsersStateHandler ReceivingUsers;
+        public delegate void ReceiveMessagesStateHandler(object sender, DataEventArgs e);
+        public event ReceiveMessagesStateHandler ReceivingMessages;
+
 
 
 
@@ -30,6 +33,42 @@ namespace Interface
             clientThread.Start();
 
         }
+        public void ParseUser(string data)
+        {
+            string temp = data.Substring(12);
+            string[] users = temp.Split('&');
+            if (ReceivingUsers != null)
+            {
+                ReceivingUsers(this, new DataEventArgs(users));
+
+            }
+        }
+        public void ParseMessage(string data)
+        {
+            try {
+                string[] temp = data.Split('&')[1].Split('|');
+
+                int countMessages = temp.Length;
+                string[] msg = new string[countMessages];
+                if (countMessages <= 0) return;
+                for (int i = 0; i < countMessages; i++)
+                {
+                    if (string.IsNullOrEmpty(temp[i])) continue;
+                    msg[i] = String.Format("[{0}]:{1}.", temp[i].Split('~')[0], temp[i].Split('~')[1]);
+
+                }
+                if (ReceivingUsers != null)
+                {
+                    ReceivingMessages(this, new DataEventArgs(msg));
+
+                }
+            } catch (IndexOutOfRangeException e)
+            {
+                
+            }
+        }
+
+        
         public void Listner()
         {
 
@@ -40,10 +79,14 @@ namespace Interface
                 byte[] buffer = new byte[8196];
                 int bytesRec = serverSocket.Receive(buffer);
                 string data = Encoding.UTF8.GetString(buffer, 0, bytesRec);
-                if (ReceivingData != null)
+                if (data.Contains("#updatechat"))
                 {
-                    ReceivingData(this, new DataEventArgs(data));
+                    ParseMessage(data);
 
+                }
+                if (data.Contains("#updateuser"))
+                {
+                    ParseUser(data);
                 }
 
             }

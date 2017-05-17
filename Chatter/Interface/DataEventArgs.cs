@@ -8,8 +8,8 @@ namespace Interface
 {
     class DataEventArgs:EventArgs
     {
-        public string Data;
-        public DataEventArgs(string data)
+        public string[] Data;
+        public DataEventArgs(string[] data)
         {
             Data = data;
         }
