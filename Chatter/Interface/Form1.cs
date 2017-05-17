@@ -15,8 +15,9 @@ namespace Interface
 {
     public partial class ChatForm : Form
     {
+        private string name;
         private delegate void printer(string data, TextBox textBox);
-        private delegate void cleaner();
+        private delegate void cleaner(TextBox textBox);
         printer Printer;
         cleaner Cleaner;
         private Socket serverSocket;
@@ -38,6 +39,7 @@ namespace Interface
         {
             while (serverSocket.Connected)
             {
+                Thread.Sleep(10);
                 byte[] buffer = new byte[8196];
                 int bytesRec = serverSocket.Receive(buffer);
                 string data = Encoding.UTF8.GetString(buffer, 0, bytesRec);
@@ -50,15 +52,19 @@ namespace Interface
                 {
                     updateOnline(data);
                 }
+
+
             }
         }
 
         private void updateOnline(string data)
         {
-            string temp = data.Substring(11);
+            clearChat(onlineVisitors);
+            string temp = data.Substring(12);
             string[] users = temp.Split('&');
-            for (int i = 0; i < users.Length; i++)
+            for (int i = 0; i < users.Length - 1; i++)
             {
+
                 print(users[i], onlineVisitors);
             }
 
@@ -77,18 +83,18 @@ namespace Interface
             }
             catch { print("Сервер недоступен!", chatBox); }
         }
-        private void clearChat()
+        private void clearChat(TextBox textBox)
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(Cleaner);
+                this.Invoke(Cleaner, textBox);
                 return;
             }
-            chatBox.Clear();
+            textBox.Clear();
         }
         private void updateChat(string data)
         {
-            clearChat();
+            clearChat(chatBox);
             string[] messages = data.Split('&')[1].Split('|');
             int countMessages = messages.Length;
             if (countMessages <= 0) return;
@@ -128,13 +134,13 @@ namespace Interface
                 textBox.AppendText(Environment.NewLine + msg);
         }
        
-       
         private void enterChat_Click(object sender, EventArgs e)
         {
-            string name = userName.Text;
-            if (string.IsNullOrEmpty(name)) return;
+            string n = userName.Text;
+            if (string.IsNullOrEmpty(n)) return;
+            name = n;
             send("#setname&" + name);
-           // send("#updateusers" + name);
+            send("#updateusers" + name);
             chatBox.Enabled = true;
             chat_msg.Enabled = true;
             chat_send.Enabled = true;
@@ -155,6 +161,7 @@ namespace Interface
                 if (string.IsNullOrEmpty(data)) return;
                 send("#newmsg&" + data);
                 chat_msg.Text = string.Empty;
+                send("#updateusers" + name);
             }
             catch { MessageBox.Show("Ошибка при отправке сообщения!"); }
         }

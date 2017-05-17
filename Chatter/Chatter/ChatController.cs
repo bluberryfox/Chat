@@ -56,7 +56,7 @@ namespace Chatter
                 string data = "#updateuser&";
                 for (int i = 0; i < Server.Clients.Count; i++)
                 {
-                    data += Server.Clients[i].UserName;
+                    data += Server.Clients[i].UserName + "&";
                 }
                 return data;
             }

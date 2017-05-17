@@ -28,6 +28,7 @@ namespace Chatter
         {
             while (true)
             {
+                Thread.Sleep(10);
                 try
                 {
                     byte[] buffer = new byte[1024];
@@ -72,7 +73,7 @@ namespace Chatter
             }
             if (data.Contains("#updateuser"))
             {
-                UpdateUser();
+                Server.UpdateAllUsers();
             }
 
         }
@@ -83,7 +84,9 @@ namespace Chatter
         }
         public void UpdateUser()
         {
-            Send(ChatController.GetUser());
+            
+               Send(ChatController.GetUser());
+            
         }
         public void Send(string command)
         {
