@@ -36,7 +36,6 @@ namespace Chatter
         {
             while (true)
             {
-                Thread.Sleep(10);
                 try
                 {
                     byte[] buffer = new byte[1024];

@@ -19,16 +19,14 @@ namespace Interface
         private delegate void printer(string data, TextBox textBox);
         private delegate void cleaner(TextBox textBox);
         printer Printer;
-        cleaner Cleaner; // с большой или маленьокй?
+        cleaner Cleaner; 
         Connection connection;
         
         public ChatForm()
         {
             InitializeComponent();
-            Printer = new printer(print);
+            Printer = new printer(Print);
             Cleaner = new cleaner(clearChat);
-            
-
         } 
         private  void receive(object sender, DataEventArgs e)
         {
@@ -51,13 +49,9 @@ namespace Interface
             string[] users = temp.Split('&');
             for (int i = 0; i < users.Length - 1; i++)
             {
-
-                print(users[i], onlineVisitors);
+                Print(users[i], onlineVisitors);
             }
-
-
         }
-
         
         private  void clearChat(TextBox textBox)
         {
@@ -79,7 +73,7 @@ namespace Interface
                 try
                 {
                     if (string.IsNullOrEmpty(messages[i])) continue;
-                    print(String.Format("[{0}]:{1}.", messages[i].Split('~')[0], messages[i].Split('~')[1]), chatBox);
+                    Print(String.Format("[{0}]:{1}.", messages[i].Split('~')[0], messages[i].Split('~')[1]), chatBox);
                 }
                 catch
                 {
@@ -87,9 +81,8 @@ namespace Interface
                 }
             }
         }
-
        
-        public void print(string msg, TextBox textBox)
+        public void Print(string msg, TextBox textBox)
         {
             if (this.InvokeRequired)
             {
@@ -104,11 +97,12 @@ namespace Interface
        
         private void enterChat_Click(object sender, EventArgs e)
         {
-            connection = new Connection();
+            connection = new Connection("localhost", 9933);
             connection.ReceivingData += receive;
             string temp = userName.Text;
             if (string.IsNullOrEmpty(temp)) return;
-            name = temp;         
+            name = temp;
+            
             connection.Send("#setname&" + name);
             connection.Send("#updateusers" + name);          
             chatBox.Enabled = true;
@@ -117,6 +111,8 @@ namespace Interface
             chat_send.Enabled = true;
             userName.Enabled = false;
             enterChat.Enabled = false;
+            
+
         }
 
         private void chat_send_Click(object sender, EventArgs e)
@@ -131,16 +127,10 @@ namespace Interface
                 if (string.IsNullOrEmpty(data)) return;
                 connection.Send("#newmsg&" + data);
                 chat_msg.Text = string.Empty;
-                //connection.Send("#updateusers" + name);
             }
             catch { MessageBox.Show("Ошибка при отправке сообщения!"); }
         }
-        //private void chatBox_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.KeyData == Keys.Enter)
-        //        sendMessage();
-        //}
-
+       
         private void chat_msg_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)

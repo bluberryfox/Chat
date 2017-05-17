@@ -13,40 +13,43 @@ namespace Interface
     {
         private Socket serverSocket;
         private Thread clientThread;
-        private const string serverHost = "localhost";
-        private const int serverPort = 9933;
+        private string serverHost;
+        private int serverPort;
         public delegate void ReceiveStateHandler(object sender, DataEventArgs e);
         public event ReceiveStateHandler ReceivingData;
 
 
 
-        public Connection()
+        public Connection(string serverHost, int serverPort)
         {
+            this.serverHost = serverHost;
+            this.serverPort = serverPort;
             Connect();
             clientThread = new Thread(Listner);
             clientThread.IsBackground = true;
             clientThread.Start();
-            Thread.Sleep(200);
+
         }
         public void Listner()
         {
-           
-            while (serverSocket.Connected) { 
-                Thread.Sleep(10);
-            
+
+            while (serverSocket.Connected)
+            {
+
+
                 byte[] buffer = new byte[8196];
                 int bytesRec = serverSocket.Receive(buffer);
                 string data = Encoding.UTF8.GetString(buffer, 0, bytesRec);
                 if (ReceivingData != null)
                 {
                     ReceivingData(this, new DataEventArgs(data));
-                    
+
                 }
-                
+
             }
-            
+
         }
-        
+
         public void Connect()
         {
             try
@@ -69,7 +72,8 @@ namespace Interface
                 byte[] buffer = Encoding.UTF8.GetBytes(data);
                 int bytesSent = serverSocket.Send(buffer);
             }
-            catch {
+            catch
+            {
                 //print("Связь с сервером прервалась...", chatBox);
             }
         }
