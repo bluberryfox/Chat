@@ -9,7 +9,7 @@ namespace Chatter
     public static class ChatController
     {
 
-        public static List<Message> Chat = new List<Message>();
+        private static List<Message> chat = new List<Message>();
 
         public static void AddMessage(string userName, string message)
         {
@@ -20,7 +20,7 @@ namespace Chatter
                     return;
                 }
                 Message newMessage = new Message(userName, message);
-                Chat.Add(newMessage);
+                chat.Add(newMessage);
                 Console.WriteLine("New message from " + userName);
                 Server.UpdateAllChats();
             }
@@ -35,11 +35,11 @@ namespace Chatter
             try
             {
                 string data = "#updatechat&";
-                int countMessages = Chat.Count;
+                int countMessages = chat.Count;
                 if (countMessages <= 0) return String.Empty;
                 for (int i = 0; i < countMessages; i++)
                 {
-                    data += Chat[i].UserName + "~" + Chat[i].Data + "|";
+                    data += chat[i].UserName + "~" + chat[i].Data + "|";
                 }
                 return data;
             }

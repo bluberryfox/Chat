@@ -9,7 +9,7 @@ namespace Chatter
 {
    public static class Server
     {
-        public static List<Client> Clients = new List<Client>();
+        public readonly static List<Client> Clients = new List<Client>();
         public static void NewClient(Socket handle)
         {
             try

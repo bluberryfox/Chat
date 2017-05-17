@@ -27,13 +27,13 @@ namespace Interface
         {
             this.serverHost = serverHost;
             this.serverPort = serverPort;
-            Connect();
-            clientThread = new Thread(Listner);
+            connect();
+            clientThread = new Thread(listner);
             clientThread.IsBackground = true;
             clientThread.Start();
 
         }
-        public void ParseUser(string data)
+        private void parseUser(string data)
         {
             string temp = data.Substring(12);
             string[] users = temp.Split('&');
@@ -43,7 +43,7 @@ namespace Interface
 
             }
         }
-        public void ParseMessage(string data)
+        private void parseMessage(string data)
         {
             try {
                 string[] temp = data.Split('&')[1].Split('|');
@@ -69,7 +69,7 @@ namespace Interface
         }
 
         
-        public void Listner()
+        private void listner()
         {
 
             while (serverSocket.Connected)
@@ -81,19 +81,19 @@ namespace Interface
                 string data = Encoding.UTF8.GetString(buffer, 0, bytesRec);
                 if (data.Contains("#updatechat"))
                 {
-                    ParseMessage(data);
+                    parseMessage(data);
 
                 }
                 if (data.Contains("#updateuser"))
                 {
-                    ParseUser(data);
+                    parseUser(data);
                 }
 
             }
 
         }
 
-        public void Connect()
+        private void connect()
         {
             try
             {

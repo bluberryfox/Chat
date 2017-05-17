@@ -25,7 +25,7 @@ namespace Interface
         public ChatForm()
         {
             InitializeComponent();
-            Printer = new printer(Print);
+            Printer = new printer(print);
             Cleaner = new cleaner(clearChat);
             connection = new Connection("localhost", 9933);
 
@@ -38,7 +38,7 @@ namespace Interface
             clearChat(onlineVisitors);
             for (int i = 0; i < users.Length - 1; i++)
             {
-                Print(users[i], onlineVisitors);
+                print(users[i], onlineVisitors);
             }
         }
 
@@ -58,11 +58,11 @@ namespace Interface
             int countMessages = messages.Length;
             for (int i = 0; i < countMessages; i++)
             {
-                Print(messages[i], chatBox);
+                print(messages[i], chatBox);
             }
         }
 
-        public void Print(string msg, TextBox textBox)
+        private void print(string msg, TextBox textBox)
         {
             if (this.InvokeRequired)
             {
