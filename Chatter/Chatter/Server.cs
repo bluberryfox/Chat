@@ -62,7 +62,7 @@ namespace Chatter
                     Clients[i].UpdateUser();
                 }
             }
-            catch (Exception exp) { Console.WriteLine("Error with updateAlLChats: " + exp.Message); }
+            catch (Exception exp) { Console.WriteLine("Error with updateAllUsers: " + exp.Message); }
         }
        
 

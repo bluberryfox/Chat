@@ -68,13 +68,13 @@
             // chatBox
             // 
             this.chatBox.Enabled = false;
-            this.chatBox.Location = new System.Drawing.Point(12, 61);
+            this.chatBox.Location = new System.Drawing.Point(12, 74);
             this.chatBox.Multiline = true;
             this.chatBox.Name = "chatBox";
             this.chatBox.ReadOnly = true;
             this.chatBox.Size = new System.Drawing.Size(395, 275);
             this.chatBox.TabIndex = 3;
-            this.chatBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatBox_KeyDown);
+           //this.chatBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatBox_KeyDown);
             // 
             // chat_msg
             // 
@@ -108,10 +108,12 @@
             // onlineVisitors
             // 
             this.onlineVisitors.Location = new System.Drawing.Point(414, 61);
+            this.onlineVisitors.Multiline = true;
             this.onlineVisitors.Name = "onlineVisitors";
             this.onlineVisitors.Size = new System.Drawing.Size(121, 275);
             this.onlineVisitors.TabIndex = 7;
-            this.onlineVisitors.Multiline = true;
+            this.onlineVisitors.Enabled = false;
+            this.onlineVisitors.ReadOnly = true;
             // 
             // onlineLabel
             // 
@@ -122,7 +124,7 @@
             this.onlineLabel.TabIndex = 8;
             this.onlineLabel.Text = "Онлайн";
             // 
-            // chatForm
+            // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -136,8 +138,8 @@
             this.Controls.Add(this.userName);
             this.Controls.Add(this.gui_userName);
             this.Controls.Add(this.enterChat);
-            this.Name = "chatForm";
-            this.Text = "OnlineChat";
+            this.Name = "ChatForm";
+            this.Text = "Чат";
             this.ResumeLayout(false);
             this.PerformLayout();
 

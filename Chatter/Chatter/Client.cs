@@ -13,12 +13,14 @@ namespace Chatter
         private string userName;
         private Socket handler;
         private Thread userThread;
+       
         public Client(Socket socket)
         {
             handler = socket;
             userThread = new Thread(listner);
             userThread.IsBackground = true;
             userThread.Start();
+           
         }
         public string UserName
         {
@@ -82,6 +84,8 @@ namespace Chatter
         {
             Send(ChatController.GetChat());
         }
+        
+
         public void UpdateUser()
         {
             
