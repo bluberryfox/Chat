@@ -32,7 +32,7 @@
             this.gui_userName = new System.Windows.Forms.Label();
             this.userName = new System.Windows.Forms.TextBox();
             this.chatBox = new System.Windows.Forms.TextBox();
-            this.chat_msg = new System.Windows.Forms.TextBox();
+            this.chat_msg = new System.Windows.Forms.RichTextBox();
             this.chat_send = new System.Windows.Forms.Button();
             this.gui_chat = new System.Windows.Forms.Label();
             this.onlineVisitors = new System.Windows.Forms.TextBox();
@@ -83,6 +83,7 @@
             this.chat_msg.Name = "chat_msg";
             this.chat_msg.Size = new System.Drawing.Size(395, 20);
             this.chat_msg.TabIndex = 4;
+            this.chat_msg.WordWrap = true;
             this.chat_msg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chat_msg_KeyDown);
             // 
             // chat_send
@@ -151,7 +152,7 @@
         private System.Windows.Forms.Label gui_userName;
         private System.Windows.Forms.TextBox userName;
         private System.Windows.Forms.TextBox chatBox;
-        private System.Windows.Forms.TextBox chat_msg;
+        private System.Windows.Forms.RichTextBox chat_msg;
         private System.Windows.Forms.Button chat_send;
         private System.Windows.Forms.Label gui_chat;
         private System.Windows.Forms.TextBox onlineVisitors;
