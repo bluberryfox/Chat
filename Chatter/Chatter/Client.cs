@@ -13,20 +13,15 @@ namespace Chatter
         private string userName;
         private Socket handler;
         private Thread userThread;
-        //public delegate void UpdateUserDelegate();
-        //UpdateUserDelegate updateUser;
-        //public delegate void UpdateChatDelegate();
-        //UpdateChatDelegate updateChat;
-
+        
         public Client(Socket socket)
         {
             handler = socket;
             userThread = new Thread(listner);
             userThread.IsBackground = true;
             userThread.Start();
-             //updateUser = new UpdateUserDelegate(UpdateUser);
-             //updateChat = new UpdateChatDelegate(UpdateChat);
-           
+          
+
         }
         public string UserName
         {
@@ -36,18 +31,12 @@ namespace Chatter
         {
             while (true)
             {
-                try
-                {
+               
                     byte[] buffer = new byte[1024];
                     int bytesRec = handler.Receive(buffer);
                     string data = Encoding.UTF8.GetString(buffer, 0, bytesRec);
                     handleCommand(data);
-                }
-                catch
-                {
-                    Server.DisconnectClient(this);
-                    return;
-                }
+               
             }
         }
         public void Disconnect()
@@ -60,9 +49,11 @@ namespace Chatter
                     userThread.Abort();
               
                 }
-                catch { }
+                catch (SocketException e)
+                {
+                }
             }
-            catch (Exception exp) { Console.WriteLine("Error with end: {0}.", exp.Message); }
+            catch (SocketException exp) { Console.WriteLine("Error with end: {0}.", exp.Message); }
         }
         private void handleCommand(string data)
         {
@@ -80,13 +71,10 @@ namespace Chatter
             }
             if (data.Contains("#updateuser"))
             {
-                //Server.Update(up)
                 Server.UpdateAllChats();
             }
-
         }
-        
-       
+
         public void UpdateChat()
         {
             Send(ChatController.GetChat());
@@ -104,7 +92,7 @@ namespace Chatter
                 int bytesSent = handler.Send(Encoding.UTF8.GetBytes(command));
                 if (bytesSent > 0) Console.WriteLine("Success");
             }
-            catch (Exception exp) {
+            catch (ArgumentException exp) {
                 Console.WriteLine("Error with send command: "+ exp.Message);
                 Server.DisconnectClient(this);
             }

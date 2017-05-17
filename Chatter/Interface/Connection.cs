@@ -60,9 +60,9 @@ namespace Interface
                 serverSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 serverSocket.Connect(ipEndPoint);
             }
-            catch
+            catch(SocketException e)
             {
-                // ChatForm.print("Сервер недоступен!", chatBox);
+                
             }
         }
         public void Send(string data)
@@ -72,9 +72,9 @@ namespace Interface
                 byte[] buffer = Encoding.UTF8.GetBytes(data);
                 int bytesSent = serverSocket.Send(buffer);
             }
-            catch
+            catch(SocketException e)
             {
-                //print("Связь с сервером прервалась...", chatBox);
+                
             }
         }
     }

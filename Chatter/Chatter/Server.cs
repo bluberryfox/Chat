@@ -20,7 +20,7 @@ namespace Chatter
         
                 Console.WriteLine("New client connected: "+ handle.RemoteEndPoint);
             }
-            catch (Exception exp)
+            catch (SocketException exp)
             {
                 Console.WriteLine("Error with addNewClient: "+ exp.Message);
             }
@@ -36,7 +36,7 @@ namespace Chatter
                 Console.WriteLine("User " + client.UserName + " has been disconnected");
 
             }
-            catch (Exception exp)
+            catch (SocketException exp)
             {
                 Console.WriteLine("Error with endClient: "+ exp.Message);
             }
@@ -52,31 +52,10 @@ namespace Chatter
                     Clients[i].UpdateUser();
                 }
             }
-            catch (Exception exp) { Console.WriteLine("Error with updateAlLChats: "+ exp.Message); }
+            catch (ArgumentException exp) { Console.WriteLine("Error with updateAlLChats: "+ exp.Message); }
         }
-        //public static void UpdateAllUsers()
-        //{
-        //    try
-        //    {
-        //        for (int i = 0; i <Clients.Count; i++)
-        //        {
-                    
-        //        }
-        //    }
-        //    catch (Exception exp) { Console.WriteLine("Error with updateAllUsers: " + exp.Message); }
-        //}
-        //public static void Update(Delegate deleg)
-        //{
-        //    try
-        //    {
-        //        for (int i = 0; i < Clients.Count; i++)
-        //        {
-        //            Clients[i].deleg;
-        //        }
-        //    }
-        //    catch (Exception exp) { Console.WriteLine("Error with updateAllUsers: " + exp.Message); }
-        //}
-       
+      
+        
 
     }
 }

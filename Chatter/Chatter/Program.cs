@@ -50,7 +50,7 @@ namespace Chatter
                     Socket user = socket.Accept();
                     Server.NewClient(user);
                 }
-                catch (Exception exp) { Console.WriteLine("Error: " + exp.Message); }
+                catch (SocketException exp) { Console.WriteLine("Error: " + exp.Message); }
             }
 
         }

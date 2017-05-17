@@ -19,24 +19,24 @@ namespace Interface
         private delegate void printer(string data, TextBox textBox);
         private delegate void cleaner(TextBox textBox);
         printer Printer;
-        cleaner Cleaner; 
+        cleaner Cleaner;
         Connection connection;
-        
+
         public ChatForm()
         {
             InitializeComponent();
             Printer = new printer(Print);
             Cleaner = new cleaner(clearChat);
             connection = new Connection("localhost", 9933);
-           
-        } 
-        private  void receive(object sender, DataEventArgs e)
+
+        }
+        private void receive(object sender, DataEventArgs e)
         {
             string data = e.Data;
             if (data.Contains("#updatechat"))
             {
                 UpdateChat(data);
-                
+
             }
             if (data.Contains("#updateuser"))
             {
@@ -54,8 +54,8 @@ namespace Interface
                 Print(users[i], onlineVisitors);
             }
         }
-        
-        private  void clearChat(TextBox textBox)
+
+        private void clearChat(TextBox textBox)
         {
             if (this.InvokeRequired)
             {
@@ -64,7 +64,7 @@ namespace Interface
             }
             textBox.Clear();
         }
-        public  void UpdateChat(string data)
+        public void UpdateChat(string data)
         {
             clearChat(chatBox);
             string[] messages = data.Split('&')[1].Split('|');
@@ -72,18 +72,11 @@ namespace Interface
             if (countMessages <= 0) return;
             for (int i = 0; i < countMessages; i++)
             {
-                try
-                {
-                    if (string.IsNullOrEmpty(messages[i])) continue;
-                    Print(String.Format("[{0}]:{1}.", messages[i].Split('~')[0], messages[i].Split('~')[1]), chatBox);
-                }
-                catch
-                {
-                    continue;
-                }
+                if (string.IsNullOrEmpty(messages[i])) continue;
+                Print(String.Format("[{0}]:{1}.", messages[i].Split('~')[0], messages[i].Split('~')[1]), chatBox);
             }
         }
-       
+
         public void Print(string msg, TextBox textBox)
         {
             if (this.InvokeRequired)
@@ -96,7 +89,7 @@ namespace Interface
             else
                 textBox.AppendText(Environment.NewLine + msg);
         }
-       
+
         private void enterChat_Click(object sender, EventArgs e)
         {
 
@@ -104,17 +97,16 @@ namespace Interface
             string temp = userName.Text;
             if (string.IsNullOrEmpty(temp)) return;
             name = temp;
-           
+
             connection.Send("#setname&" + name);
-            connection.Send("#updateusers" + name);          
+            connection.Send("#updateusers" + name);
             chatBox.Enabled = true;
             chat_msg.Enabled = true;
-            
+
             onlineVisitors.Enabled = true;
             chat_send.Enabled = true;
             userName.Enabled = false;
             enterChat.Enabled = false;
-            
 
         }
 
@@ -131,15 +123,15 @@ namespace Interface
                 connection.Send("#newmsg&" + data);
                 chat_msg.Text = string.Empty;
             }
-            catch { MessageBox.Show("Ошибка при отправке сообщения!"); }
+            catch(SocketException e) { MessageBox.Show("Ошибка при отправке сообщения!"); }
         }
-       
+
         private void chat_msg_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
                 sendMessage();
         }
-        
+
     }
-    }
+}
 

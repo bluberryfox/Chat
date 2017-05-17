@@ -24,7 +24,7 @@ namespace Chatter
                 Console.WriteLine("New message from " + userName);
                 Server.UpdateAllChats();
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
                 Console.WriteLine("Error with addMessage: " + e.Message);
             }
@@ -43,7 +43,7 @@ namespace Chatter
                 }
                 return data;
             }
-            catch (Exception exp)
+            catch (ArgumentException exp)
             {
                 Console.WriteLine("Error with getChat: " + exp.Message);
                 return null;
@@ -60,7 +60,7 @@ namespace Chatter
                 }
                 return data;
             }
-            catch (Exception exp)
+            catch (ArgumentException exp)
             {
                 Console.WriteLine("Error with getUser: " + exp.Message);
                 return null;
