@@ -81,7 +81,7 @@ namespace Chatter
             if (data.Contains("#updateuser"))
             {
                 //Server.Update(up)
-                Server.UpdateAllUsers();
+                Server.UpdateAllChats();
             }
 
         }

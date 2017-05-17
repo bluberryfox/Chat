@@ -32,7 +32,7 @@ namespace Chatter
             {
                 client.Disconnect();
                 Clients.Remove(client);
-                UpdateAllUsers();
+                UpdateAllChats();
                 Console.WriteLine("User " + client.UserName + " has been disconnected");
 
             }
@@ -49,21 +49,22 @@ namespace Chatter
                 for (int i = 0; i < countUsers; i++)
                 {
                     Clients[i].UpdateChat();
+                    Clients[i].UpdateUser();
                 }
             }
             catch (Exception exp) { Console.WriteLine("Error with updateAlLChats: "+ exp.Message); }
         }
-        public static void UpdateAllUsers()
-        {
-            try
-            {
-                for (int i = 0; i <Clients.Count; i++)
-                {
-                    Clients[i].UpdateUser();
-                }
-            }
-            catch (Exception exp) { Console.WriteLine("Error with updateAllUsers: " + exp.Message); }
-        }
+        //public static void UpdateAllUsers()
+        //{
+        //    try
+        //    {
+        //        for (int i = 0; i <Clients.Count; i++)
+        //        {
+                    
+        //        }
+        //    }
+        //    catch (Exception exp) { Console.WriteLine("Error with updateAllUsers: " + exp.Message); }
+        //}
         //public static void Update(Delegate deleg)
         //{
         //    try
