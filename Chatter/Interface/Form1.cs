@@ -27,8 +27,8 @@ namespace Interface
             InitializeComponent();
             Printer = new printer(print);
             Cleaner = new cleaner(clearChat);
-            connection = new Connection();
-            connection.ReceivingData += receive;
+            
+
         } 
         private  void receive(object sender, DataEventArgs e)
         {
@@ -104,18 +104,19 @@ namespace Interface
        
         private void enterChat_Click(object sender, EventArgs e)
         {
+            connection = new Connection();
+            connection.ReceivingData += receive;
             string temp = userName.Text;
             if (string.IsNullOrEmpty(temp)) return;
-            name = temp;
+            name = temp;         
             connection.Send("#setname&" + name);
-            connection.Send("#updateusers" + name);
+            connection.Send("#updateusers" + name);          
             chatBox.Enabled = true;
             chat_msg.Enabled = true;
             onlineVisitors.Enabled = true;
             chat_send.Enabled = true;
             userName.Enabled = false;
             enterChat.Enabled = false;
-
         }
 
         private void chat_send_Click(object sender, EventArgs e)

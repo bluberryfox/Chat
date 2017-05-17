@@ -64,6 +64,17 @@ namespace Chatter
             }
             catch (Exception exp) { Console.WriteLine("Error with updateAllUsers: " + exp.Message); }
         }
+        //public static void Update(Delegate deleg)
+        //{
+        //    try
+        //    {
+        //        for (int i = 0; i < Clients.Count; i++)
+        //        {
+        //            Clients[i].deleg;
+        //        }
+        //    }
+        //    catch (Exception exp) { Console.WriteLine("Error with updateAllUsers: " + exp.Message); }
+        //}
        
 
     }

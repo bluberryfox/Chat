@@ -13,13 +13,19 @@ namespace Chatter
         private string userName;
         private Socket handler;
         private Thread userThread;
-       
+        //public delegate void UpdateUserDelegate();
+        //UpdateUserDelegate updateUser;
+        //public delegate void UpdateChatDelegate();
+        //UpdateChatDelegate updateChat;
+
         public Client(Socket socket)
         {
             handler = socket;
             userThread = new Thread(listner);
             userThread.IsBackground = true;
             userThread.Start();
+             //updateUser = new UpdateUserDelegate(UpdateUser);
+             //updateChat = new UpdateChatDelegate(UpdateChat);
            
         }
         public string UserName
@@ -75,10 +81,12 @@ namespace Chatter
             }
             if (data.Contains("#updateuser"))
             {
+                //Server.Update(up)
                 Server.UpdateAllUsers();
             }
 
         }
+        
        
         public void UpdateChat()
         {
@@ -88,9 +96,7 @@ namespace Chatter
 
         public void UpdateUser()
         {
-            
                Send(ChatController.GetUser());
-            
         }
         public void Send(string command)
         {

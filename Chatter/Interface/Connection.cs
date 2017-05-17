@@ -23,11 +23,12 @@ namespace Interface
         public Connection()
         {
             Connect();
-            clientThread = new Thread(listner);
+            clientThread = new Thread(Listner);
             clientThread.IsBackground = true;
             clientThread.Start();
+            Thread.Sleep(200);
         }
-        public void listner()
+        public void Listner()
         {
            
             while (serverSocket.Connected) { 
@@ -39,9 +40,11 @@ namespace Interface
                 if (ReceivingData != null)
                 {
                     ReceivingData(this, new DataEventArgs(data));
+                    
                 }
+                
             }
-
+            
         }
         
         public void Connect()
