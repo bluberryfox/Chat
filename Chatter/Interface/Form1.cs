@@ -112,7 +112,7 @@ namespace Interface
             catch(SocketException e) { MessageBox.Show("Ошибка при отправке сообщения!"); }
         }
 
-        private void chat_msg_KeyDown(object sender, KeyEventArgs e)
+        private void chatMsg_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
                 sendMessage();
