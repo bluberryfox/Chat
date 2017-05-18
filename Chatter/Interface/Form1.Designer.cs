@@ -84,7 +84,7 @@
             this.chatMsg.Size = new System.Drawing.Size(395, 20);
             this.chatMsg.TabIndex = 4;
             this.chatMsg.WordWrap = true;
-            this.chatMsg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chat_msg_KeyDown);
+            this.chatMsg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatMsg_KeyDown);
             // 
             // chat_send
             // 
@@ -95,7 +95,7 @@
             this.chatSend.TabIndex = 5;
             this.chatSend.Text = "Отправить";
             this.chatSend.UseVisualStyleBackColor = true;
-            this.chaSend.Click += new System.EventHandler(this.chat_send_Click);
+            this.chaSend.Click += new System.EventHandler(this.chatSend_Click);
             // 
             // gui_chat
             // 
@@ -132,12 +132,12 @@
             this.ClientSize = new System.Drawing.Size(548, 385);
             this.Controls.Add(this.onlineLabel);
             this.Controls.Add(this.onlineVisitors);
-            this.Controls.Add(this.gui_chat);
-            this.Controls.Add(this.chat_send);
-            this.Controls.Add(this.chat_msg);
+            this.Controls.Add(this.guiChat);
+            this.Controls.Add(this.chatSend);
+            this.Controls.Add(this.chatMsg);
             this.Controls.Add(this.chatBox);
             this.Controls.Add(this.userName);
-            this.Controls.Add(this.gui_userName);
+            this.Controls.Add(this.guiUserName);
             this.Controls.Add(this.enterChat);
             this.Name = "ChatForm";
             this.Text = "Чат";
@@ -149,12 +149,12 @@
         #endregion
 
         private System.Windows.Forms.Button enterChat;
-        private System.Windows.Forms.Label gui_userName;
+        private System.Windows.Forms.Label guiUserName;
         private System.Windows.Forms.TextBox userName;
         private System.Windows.Forms.TextBox chatBox;
-        private System.Windows.Forms.RichTextBox chat_msg;
-        private System.Windows.Forms.Button chat_send;
-        private System.Windows.Forms.Label gui_chat;
+        private System.Windows.Forms.RichTextBox chatMsg;
+        private System.Windows.Forms.Button chatSend;
+        private System.Windows.Forms.Label guiChat;
         private System.Windows.Forms.TextBox onlineVisitors;
         private System.Windows.Forms.Label onlineLabel;
     }
