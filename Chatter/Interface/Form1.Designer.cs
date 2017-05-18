@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.enterChat = new System.Windows.Forms.Button();
-            this.gui_userName = new System.Windows.Forms.Label();
+            this.guiUserName = new System.Windows.Forms.Label();
             this.userName = new System.Windows.Forms.TextBox();
             this.chatBox = new System.Windows.Forms.TextBox();
-            this.chat_msg = new System.Windows.Forms.RichTextBox();
-            this.chat_send = new System.Windows.Forms.Button();
-            this.gui_chat = new System.Windows.Forms.Label();
+            this.chatMsg = new System.Windows.Forms.RichTextBox();
+            this.chatSend = new System.Windows.Forms.Button();
+            this.guiChat = new System.Windows.Forms.Label();
             this.onlineVisitors = new System.Windows.Forms.TextBox();
             this.onlineLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -51,12 +51,12 @@
             // 
             // gui_userName
             // 
-            this.gui_userName.AutoSize = true;
-            this.gui_userName.Location = new System.Drawing.Point(10, 9);
-            this.gui_userName.Name = "gui_userName";
-            this.gui_userName.Size = new System.Drawing.Size(107, 13);
-            this.gui_userName.TabIndex = 1;
-            this.gui_userName.Text = "Введите ваше имя: ";
+            this.guiuserName.AutoSize = true;
+            this.guiUserName.Location = new System.Drawing.Point(10, 9);
+            this.guiUserName.Name = "gui_userName";
+            this.guiUserName.Size = new System.Drawing.Size(107, 13);
+            this.guiUserName.TabIndex = 1;
+            this.guiUserName.Text = "Введите ваше имя: ";
             // 
             // userName
             // 
@@ -78,33 +78,33 @@
             // 
             // chat_msg
             // 
-            this.chat_msg.Enabled = false;
-            this.chat_msg.Location = new System.Drawing.Point(12, 344);
-            this.chat_msg.Name = "chat_msg";
-            this.chat_msg.Size = new System.Drawing.Size(395, 20);
-            this.chat_msg.TabIndex = 4;
-            this.chat_msg.WordWrap = true;
-            this.chat_msg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chat_msg_KeyDown);
+            this.chatMsg.Enabled = false;
+            this.chatMsg.Location = new System.Drawing.Point(12, 344);
+            this.chatMsg.Name = "chat_msg";
+            this.chatMsg.Size = new System.Drawing.Size(395, 20);
+            this.chatMsg.TabIndex = 4;
+            this.chatMsg.WordWrap = true;
+            this.chatMsg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chat_msg_KeyDown);
             // 
             // chat_send
             // 
-            this.chat_send.Enabled = false;
-            this.chat_send.Location = new System.Drawing.Point(413, 342);
-            this.chat_send.Name = "chat_send";
-            this.chat_send.Size = new System.Drawing.Size(123, 23);
-            this.chat_send.TabIndex = 5;
-            this.chat_send.Text = "Отправить";
-            this.chat_send.UseVisualStyleBackColor = true;
-            this.chat_send.Click += new System.EventHandler(this.chat_send_Click);
+            this.chatSend.Enabled = false;
+            this.chatSend.Location = new System.Drawing.Point(413, 342);
+            this.chatSend.Name = "chat_send";
+            this.chatSend.Size = new System.Drawing.Size(123, 23);
+            this.chatSend.TabIndex = 5;
+            this.chatSend.Text = "Отправить";
+            this.chatSend.UseVisualStyleBackColor = true;
+            this.chaSend.Click += new System.EventHandler(this.chat_send_Click);
             // 
             // gui_chat
             // 
-            this.gui_chat.AutoSize = true;
-            this.gui_chat.Location = new System.Drawing.Point(12, 45);
-            this.gui_chat.Name = "gui_chat";
-            this.gui_chat.Size = new System.Drawing.Size(29, 13);
-            this.gui_chat.TabIndex = 6;
-            this.gui_chat.Text = "Чат:";
+            this.guiChat.AutoSize = true;
+            this.guiChat.Location = new System.Drawing.Point(12, 45);
+            this.guiChat.Name = "gui_chat";
+            this.guiChat.Size = new System.Drawing.Size(29, 13);
+            this.guiChat.TabIndex = 6;
+            this.guiChat.Text = "Чат:";
             // 
             // onlineVisitors
             // 
