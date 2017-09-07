@@ -13,24 +13,21 @@ namespace Interface
     {
         private Socket serverSocket;
         private Thread clientThread;
-        private string serverHost;
+        public string ServerHost;
         private int serverPort;
         public delegate void ReceiveUsersStateHandler(object sender, DataEventArgs e);
         public event ReceiveUsersStateHandler ReceivingUsers;
         public delegate void ReceiveMessagesStateHandler(object sender, DataEventArgs e);
         public event ReceiveMessagesStateHandler ReceivingMessages;
+        public event EventHandler OnDisconnect;
 
 
 
 
         public Connection(string serverHost, int serverPort)
         {
-            this.serverHost = serverHost;
+            this.ServerHost = serverHost;
             this.serverPort = serverPort;
-            connect();
-            clientThread = new Thread(listner);
-            clientThread.IsBackground = true;
-            clientThread.Start();
 
         }
         private void parseUser(string data)
@@ -57,12 +54,14 @@ namespace Interface
                     msg[i] = String.Format("[{0}]:{1}.", temp[i].Split('~')[0], temp[i].Split('~')[1]);
 
                 }
+                if (msg[0] == null)
+                    msg[0] = "";
                 if (ReceivingUsers != null)
                 {
                     ReceivingMessages(this, new DataEventArgs(msg));
 
                 }
-            } catch (IndexOutOfRangeException e)
+            } catch (IndexOutOfRangeException)
             {
                 
             }
@@ -77,49 +76,76 @@ namespace Interface
 
 
                 byte[] buffer = new byte[8196];
-                int bytesRec = serverSocket.Receive(buffer);
-                string data = Encoding.UTF8.GetString(buffer, 0, bytesRec);
-                if (data.Contains("#updatechat"))
+                int bytesRec;
+                try
                 {
-                    parseMessage(data);
+                    bytesRec = serverSocket.Receive(buffer);
+                }
+                catch (SocketException)
+                {
+                    Disconnect();
+                    return;
+                }
+                string[] data = Encoding.UTF8.GetString(buffer, 0, bytesRec).Split('\n');
+                for (int i = 0; i < data.Length - 1; i++)
+                    if (data[i].Contains("#updatechat"))
+                    {
+                        parseMessage(data[i]);
 
-                }
-                if (data.Contains("#updateuser"))
-                {
-                    parseUser(data);
-                }
+                    }
+                    else if (data[i].Contains("#updateuser"))
+                    {
+                        parseUser(data[i]);
+                    }
 
             }
 
         }
 
-        private void connect()
+        public void Connect()
         {
             try
             {
-                IPHostEntry ipHost = Dns.GetHostEntry(serverHost);
-                IPAddress ipAddress = ipHost.AddressList[0];
+                IPAddress ipAddress = IPAddress.Parse(ServerHost);
                 IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, serverPort);
                 serverSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 serverSocket.Connect(ipEndPoint);
+                clientThread = new Thread(listner);
+                clientThread.IsBackground = true;
+                clientThread.Start();
             }
-            catch(SocketException e)
+            catch(SocketException)
             {
-                
+                serverSocket = null;
             }
         }
         public void Send(string data)
         {
             try
             {
-                byte[] buffer = Encoding.UTF8.GetBytes(data);
+                
+                byte[] buffer = Encoding.UTF8.GetBytes(data + '\n');
                 int bytesSent = serverSocket.Send(buffer);
 
             }
-            catch(SocketException e)
+            catch(SocketException)
             {
-                
+                Disconnect();
             }
+        }
+
+        public void Disconnect()
+        {
+            clientThread.Interrupt();
+            try
+            {
+                serverSocket.Close();
+            }
+            catch
+            {
+            }
+            serverSocket = null;
+            OnDisconnect?.Invoke(null, null);
         }
     }
 }

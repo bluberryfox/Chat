@@ -11,7 +11,6 @@ namespace Chatter
 {
     class Program
     {
-        private const string serverHost = "localhost";
         private const int serverPort = 9933;
         private static Thread serverThread;
         static void Main(string[] args)
@@ -36,9 +35,8 @@ namespace Chatter
         }
         private static void startServer()
         {
-            IPHostEntry ipHost = Dns.GetHostEntry(serverHost);
-            IPAddress ipAddress = ipHost.AddressList[0];
-            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, serverPort);
+            IPAddress ipAddress = IPAddress.Any;
+            IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, serverPort);
             Socket socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             socket.Bind(ipEndPoint);
             socket.Listen(1000);

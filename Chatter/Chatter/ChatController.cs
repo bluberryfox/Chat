@@ -30,7 +30,7 @@ namespace Chatter
             }
         }
 
-        public static string GetChat()
+        public static string GetChat(SortedSet<string> blacklist = null)
         {
             try
             {
@@ -39,7 +39,8 @@ namespace Chatter
                 if (countMessages <= 0) return String.Empty;
                 for (int i = 0; i < countMessages; i++)
                 {
-                    data += chat[i].UserName + "~" + chat[i].Data + "|";
+                    if (blacklist == null || !blacklist.Contains(chat[i].UserName))
+                        data += chat[i].UserName + "~" + chat[i].Data + "|";
                 }
                 return data;
             }

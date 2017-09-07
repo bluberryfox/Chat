@@ -10,13 +10,13 @@ namespace Chatter
    public static class Server
     {
         public readonly static List<Client> Clients = new List<Client>();
+        public readonly static Dictionary<string, SortedSet<string>> BlackList = new Dictionary<string, SortedSet<string>>();
         public static void NewClient(Socket handle)
         {
             try
             {
                 Client newClient = new Client(handle);
                 Clients.Add(newClient);
-                
         
                 Console.WriteLine("New client connected: "+ handle.RemoteEndPoint);
             }
@@ -54,8 +54,20 @@ namespace Chatter
             }
             catch (ArgumentException exp) { Console.WriteLine("Error with updateAlLChats: "+ exp.Message); }
         }
-      
-        
+        public static void ToggleIgnore(Client cl, string user)
+        {
+            if (!BlackList.ContainsKey(cl.UserName))
+                BlackList[cl.UserName] = new SortedSet<string>();
+            if (!BlackList[cl.UserName].Contains(user))
+                BlackList[cl.UserName].Add(user);
+            else
+                BlackList[cl.UserName].Remove(user);
+            if (BlackList[cl.UserName].Count == 0)
+                BlackList.Remove(cl.UserName);
+            cl.UpdateChat();
+        }
+
+
 
     }
 }

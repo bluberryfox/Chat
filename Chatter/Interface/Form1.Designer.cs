@@ -32,16 +32,21 @@
             this.guiUserName = new System.Windows.Forms.Label();
             this.userName = new System.Windows.Forms.TextBox();
             this.chatBox = new System.Windows.Forms.TextBox();
-            this.chatMsg = new System.Windows.Forms.RichTextBox();
+            this.chatMsg = new System.Windows.Forms.TextBox();
             this.chatSend = new System.Windows.Forms.Button();
             this.guiChat = new System.Windows.Forms.Label();
             this.onlineVisitors = new System.Windows.Forms.TextBox();
             this.onlineLabel = new System.Windows.Forms.Label();
+            this.textBoxIP = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxIgnore = new System.Windows.Forms.TextBox();
+            this.buttonIgnore = new System.Windows.Forms.Button();
+            this.buttonDisconnect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // enterChat
             // 
-            this.enterChat.Location = new System.Drawing.Point(226, 4);
+            this.enterChat.Location = new System.Drawing.Point(254, 6);
             this.enterChat.Name = "enterChat";
             this.enterChat.Size = new System.Drawing.Size(123, 23);
             this.enterChat.TabIndex = 0;
@@ -49,14 +54,14 @@
             this.enterChat.UseVisualStyleBackColor = true;
             this.enterChat.Click += new System.EventHandler(this.enterChat_Click);
             // 
-            // gui_userName
+            // guiUserName
             // 
-            this.guiuserName.AutoSize = true;
+            this.guiUserName.AutoSize = true;
             this.guiUserName.Location = new System.Drawing.Point(10, 9);
-            this.guiUserName.Name = "gui_userName";
-            this.guiUserName.Size = new System.Drawing.Size(107, 13);
+            this.guiUserName.Name = "guiUserName";
+            this.guiUserName.Size = new System.Drawing.Size(32, 13);
             this.guiUserName.TabIndex = 1;
-            this.guiUserName.Text = "Введите ваше имя: ";
+            this.guiUserName.Text = "Имя:";
             // 
             // userName
             // 
@@ -68,68 +73,117 @@
             // chatBox
             // 
             this.chatBox.Enabled = false;
-            this.chatBox.Location = new System.Drawing.Point(12, 74);
+            this.chatBox.Location = new System.Drawing.Point(141, 98);
             this.chatBox.Multiline = true;
             this.chatBox.Name = "chatBox";
             this.chatBox.ReadOnly = true;
-            this.chatBox.Size = new System.Drawing.Size(395, 275);
+            this.chatBox.Size = new System.Drawing.Size(395, 288);
             this.chatBox.TabIndex = 3;
-           //this.chatBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatBox_KeyDown);
             // 
-            // chat_msg
+            // chatMsg
             // 
             this.chatMsg.Enabled = false;
-            this.chatMsg.Location = new System.Drawing.Point(12, 344);
-            this.chatMsg.Name = "chat_msg";
-            this.chatMsg.Size = new System.Drawing.Size(395, 20);
+            this.chatMsg.Location = new System.Drawing.Point(141, 392);
+            this.chatMsg.Name = "chatMsg";
+            this.chatMsg.Size = new System.Drawing.Size(266, 20);
             this.chatMsg.TabIndex = 4;
-            this.chatMsg.WordWrap = true;
             this.chatMsg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.chatMsg_KeyDown);
             // 
-            // chat_send
+            // chatSend
             // 
             this.chatSend.Enabled = false;
-            this.chatSend.Location = new System.Drawing.Point(413, 342);
-            this.chatSend.Name = "chat_send";
+            this.chatSend.Location = new System.Drawing.Point(413, 392);
+            this.chatSend.Name = "chatSend";
             this.chatSend.Size = new System.Drawing.Size(123, 23);
             this.chatSend.TabIndex = 5;
             this.chatSend.Text = "Отправить";
             this.chatSend.UseVisualStyleBackColor = true;
-            this.chaSend.Click += new System.EventHandler(this.chatSend_Click);
+            this.chatSend.Click += new System.EventHandler(this.chatSend_Click);
             // 
-            // gui_chat
+            // guiChat
             // 
             this.guiChat.AutoSize = true;
-            this.guiChat.Location = new System.Drawing.Point(12, 45);
-            this.guiChat.Name = "gui_chat";
+            this.guiChat.Location = new System.Drawing.Point(138, 68);
+            this.guiChat.Name = "guiChat";
             this.guiChat.Size = new System.Drawing.Size(29, 13);
             this.guiChat.TabIndex = 6;
             this.guiChat.Text = "Чат:";
             // 
             // onlineVisitors
             // 
-            this.onlineVisitors.Location = new System.Drawing.Point(414, 61);
+            this.onlineVisitors.Enabled = false;
+            this.onlineVisitors.Location = new System.Drawing.Point(12, 98);
             this.onlineVisitors.Multiline = true;
             this.onlineVisitors.Name = "onlineVisitors";
-            this.onlineVisitors.Size = new System.Drawing.Size(121, 275);
-            this.onlineVisitors.TabIndex = 7;
-            this.onlineVisitors.Enabled = false;
             this.onlineVisitors.ReadOnly = true;
+            this.onlineVisitors.Size = new System.Drawing.Size(121, 314);
+            this.onlineVisitors.TabIndex = 7;
             // 
             // onlineLabel
             // 
             this.onlineLabel.AutoSize = true;
-            this.onlineLabel.Location = new System.Drawing.Point(413, 44);
+            this.onlineLabel.Location = new System.Drawing.Point(9, 68);
             this.onlineLabel.Name = "onlineLabel";
-            this.onlineLabel.Size = new System.Drawing.Size(45, 13);
+            this.onlineLabel.Size = new System.Drawing.Size(115, 13);
             this.onlineLabel.TabIndex = 8;
-            this.onlineLabel.Text = "Онлайн";
+            this.onlineLabel.Text = "Пользователи в сети";
+            // 
+            // textBoxIP
+            // 
+            this.textBoxIP.Location = new System.Drawing.Point(120, 29);
+            this.textBoxIP.Name = "textBoxIP";
+            this.textBoxIP.Size = new System.Drawing.Size(100, 20);
+            this.textBoxIP.TabIndex = 10;
+            this.textBoxIP.Text = "127.0.0.1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 33);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(98, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "IP-адрес сервера:";
+            // 
+            // textBoxIgnore
+            // 
+            this.textBoxIgnore.Location = new System.Drawing.Point(412, 6);
+            this.textBoxIgnore.Name = "textBoxIgnore";
+            this.textBoxIgnore.Size = new System.Drawing.Size(123, 20);
+            this.textBoxIgnore.TabIndex = 11;
+            // 
+            // buttonIgnore
+            // 
+            this.buttonIgnore.Location = new System.Drawing.Point(412, 32);
+            this.buttonIgnore.Name = "buttonIgnore";
+            this.buttonIgnore.Size = new System.Drawing.Size(123, 20);
+            this.buttonIgnore.TabIndex = 12;
+            this.buttonIgnore.Text = "В игнор\\Антиигнор";
+            this.buttonIgnore.UseVisualStyleBackColor = true;
+            this.buttonIgnore.Click += new System.EventHandler(this.buttonIgnore_Click);
+            // 
+            // buttonDisconnect
+            // 
+            this.buttonDisconnect.Enabled = false;
+            this.buttonDisconnect.Location = new System.Drawing.Point(254, 29);
+            this.buttonDisconnect.Name = "buttonDisconnect";
+            this.buttonDisconnect.Size = new System.Drawing.Size(123, 23);
+            this.buttonDisconnect.TabIndex = 13;
+            this.buttonDisconnect.Text = "Выйти из чата";
+            this.buttonDisconnect.UseVisualStyleBackColor = true;
+            this.buttonDisconnect.Click += new System.EventHandler(this.buttonDisconnect_Click);
             // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(548, 385);
+            this.BackColor = System.Drawing.Color.AliceBlue;
+            this.ClientSize = new System.Drawing.Size(548, 424);
+            this.Controls.Add(this.buttonDisconnect);
+            this.Controls.Add(this.buttonIgnore);
+            this.Controls.Add(this.textBoxIgnore);
+            this.Controls.Add(this.textBoxIP);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.onlineLabel);
             this.Controls.Add(this.onlineVisitors);
             this.Controls.Add(this.guiChat);
@@ -152,11 +206,16 @@
         private System.Windows.Forms.Label guiUserName;
         private System.Windows.Forms.TextBox userName;
         private System.Windows.Forms.TextBox chatBox;
-        private System.Windows.Forms.RichTextBox chatMsg;
+        private System.Windows.Forms.TextBox chatMsg;
         private System.Windows.Forms.Button chatSend;
         private System.Windows.Forms.Label guiChat;
         private System.Windows.Forms.TextBox onlineVisitors;
         private System.Windows.Forms.Label onlineLabel;
+        private System.Windows.Forms.TextBox textBoxIP;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxIgnore;
+        private System.Windows.Forms.Button buttonIgnore;
+        private System.Windows.Forms.Button buttonDisconnect;
     }
 }
 

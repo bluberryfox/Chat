@@ -20,7 +20,7 @@ namespace Chatter
             userThread = new Thread(listner);
             userThread.IsBackground = true;
             userThread.Start();
-          
+           
 
         }
         public string UserName
@@ -33,9 +33,19 @@ namespace Chatter
             {
                
                     byte[] buffer = new byte[1024];
-                    int bytesRec = handler.Receive(buffer);
-                    string data = Encoding.UTF8.GetString(buffer, 0, bytesRec);
-                    handleCommand(data);
+                    int bytesRec;
+                    try
+                    {
+                        bytesRec = handler.Receive(buffer);
+                    }
+                    catch (SocketException)
+                    {
+                        Server.DisconnectClient(this);
+                        break;
+                    }
+                    string[] data = Encoding.UTF8.GetString(buffer, 0, bytesRec).Split('\n');
+                    for (int i = 0; i < data.Length - 1; i++)
+                        handleCommand(data[i]);
                
             }
         }
@@ -46,7 +56,7 @@ namespace Chatter
                 handler.Close();
                 try
                 {
-                    userThread.Abort();
+                    userThread.Interrupt();
               
                 }
                 catch (SocketException e)
@@ -73,11 +83,18 @@ namespace Chatter
             {
                 Server.UpdateAllChats();
             }
+            if (data.Contains("#blacklist"))
+            {
+                Server.ToggleIgnore(this, data.Split('&')[1]);
+            }
         }
 
         public void UpdateChat()
         {
-            Send(ChatController.GetChat());
+            if (Server.BlackList.ContainsKey(UserName))
+                Send(ChatController.GetChat(Server.BlackList[UserName]));
+            else
+                Send(ChatController.GetChat());
         }
         
 
@@ -89,7 +106,8 @@ namespace Chatter
         {
             try
             {
-                int bytesSent = handler.Send(Encoding.UTF8.GetBytes(command));
+                Console.WriteLine(command);
+                int bytesSent = handler.Send(Encoding.UTF8.GetBytes(command + '\n'));
                 if (bytesSent > 0) Console.WriteLine("Success");
             }
             catch (ArgumentException exp) {
